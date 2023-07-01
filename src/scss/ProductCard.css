@@ -1,0 +1,11 @@
+.card{
+    min-width: 295px;
+    max-width: 400px;
+    min-height: 100px;
+    max-height: 400px;
+}
+
+.card-img-thumbnail{
+    min-height: 100px;
+    max-height: 1000px;
+}
