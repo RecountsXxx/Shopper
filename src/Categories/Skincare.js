@@ -1,61 +1,86 @@
-import {Component} from "react";
 import '../scss/Categories.css';
 import ProductCard from "../Components/ProductCard";
+import React, {useState, useEffect, createRef} from 'react';
 
-class Skincare extends Component {
-    state = {
-        products: []
-    };
+const Skincare = () => {
+    const productsListRef = createRef();
+    const [isChecked, setIsChecked] = useState(false);
+    const [selectedBrands, setSelectedBrands] = useState([]);
+    const [products, setProducts] = useState([]);
 
-    componentDidMount() {
+    useEffect(() => {
         fetch('https://dummyjson.com/products/category/skincare')
             .then((response) => response.json())
-            .then((Skincare) => {
-                this.setState({ products: Skincare.products });
+            .then((skincare) => {
+                setProducts(skincare.products);
             })
             .catch((error) => {
                 console.log(error);
             });
-    }
+    }, []);
 
-    render() {
-        const { products } = this.state;
-        var array = Object.values(products);
+    const handleCheckboxChange = (event) => {
+        const { value, checked } = event.target;
+        setIsChecked(checked);
 
-        return (
-            <div className="container-grid bg-light">
-                <div className="container-filter">
-                    <h3 className="text-dark mt-2">Brands</h3>{
-                    array.flat().map((product, index) => (
-                        <div className="form-check">
-                            <input className="form-check-input" type="checkbox" value="" id="defaultCheck1"/>
-                            <label className="form-check-label" htmlFor="defaultCheck1">
-                                {product.brand}
+        if (checked) {
+            setSelectedBrands((prevSelectedBrands) => [...prevSelectedBrands, value]);
+        } else {
+            setSelectedBrands((prevSelectedBrands) => prevSelectedBrands.filter((brand) => brand !== value));
+        }
+    };
+
+    const array = Object.values(products).flat();
+
+    const filteredProducts = array.filter((product) => {
+        if (selectedBrands.length === 0) {
+            return true;
+        } else {
+            return selectedBrands.includes(product.brand);
+        }
+    });
+
+    var brands = new Set();
+
+    array.map((element,index)=>{
+        brands.add(element.brand);
+    });
+    brands = Array.from(brands);
+    return (
+        <div className="container-grid bg-light">
+            <div className="container-filter">
+                <div>
+                    <h3 className="text-dark mt-2">Brands</h3>
+                    {brands.map((product, index) => (
+                        <div className="form-check" key={index}>
+                            <input className="form-check-input" type="checkbox" value={product} id={`defaultCheck${index}`} onChange={handleCheckboxChange}/>
+                            <label className="form-check-label" htmlFor={`defaultCheck${index}`}>
+                                {product}
                             </label>
                         </div>
                     ))}
-                    <h3 className="text-dark mt-2">Price</h3>
-                    <input type="text" className="input-group-text mt-2" placeholder="From 0.00"/>
-                    <input type="text" className="input-group-text mt-2" placeholder="To 100000.0"/>
                 </div>
-                <div className="container">
-                    {
-                        array.flat().map((product, index) => (
-                            <ProductCard
-                                key={index}
-                                title={product.title}
-                                description = {product.description}
-                                price = {product.price + "$"}
-                                brand = {product.brand}
-                                rating = {product.rating}
-                                src={product.thumbnail}
-                            />
-                        ))}
+                <div>
+                    <h3 className="text-dark mt-2">Price</h3>
+                    <input type="text" className="input-group-text mt-2" placeholder="From 0.00" />
+                    <input type="text" className="input-group-text mt-2" placeholder="To 100000.0" />
                 </div>
             </div>
+            <div className="container mt-2" id="products-list" ref={productsListRef}>
+                {filteredProducts.map((product, index) => (
+                    <ProductCard
+                        key={index}
+                        title={product.title}
+                        description={product.description}
+                        price={product.price + '$'}
+                        brand={product.brand}
+                        rating={product.rating}
+                        src={product.thumbnail}
+                    />
+                ))}
+            </div>
+        </div>
+    );
+};
 
-        );
-    }
-}
-
-export  default Skincare;
+export default Skincare;

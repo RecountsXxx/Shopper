@@ -6,6 +6,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: .3s ease-in-out;
+}
+.search-btn:hover{
+    background: cornflowerblue;
 }
 .backet-btn{
     border: none;
@@ -17,6 +21,7 @@
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
+    transition: .3s ease-in-out;
 }
 .backet-btn img{
     width: 35px;
@@ -25,6 +30,9 @@
 .backet-btn label{
     font-weight: 600;
     color:grey;
+}
+.backet-btn:hover{
+    background: cornflowerblue;
 }
 .border-search{
     border-radius: 20px 0px 0px 20px;
@@ -51,4 +59,31 @@
 }
 .categories-link:hover{
     background: cornflowerblue;
+}
+.search-form{
+    width: 60%;
+}
+
+@media (max-width: 768px){
+    .catagories-container{
+        flex-direction: column;
+        background: transparent;
+    }
+    .categories-link{
+        background: transparent;
+        border-radius: 15px 0px 0px 0px;
+        border: 1px gray solid;
+        margin-top: 5px;
+    }
+    .link-color{
+        color: gray;
+    }
+    .search-form{
+        width: 100%;
+    }
+    .backet-btn{
+        width: 100%;
+        margin-top: 5px;
+        justify-content: space-between;
+    }
 }

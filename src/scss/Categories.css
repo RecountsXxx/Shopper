@@ -13,3 +13,18 @@
     margin-left: 12px;
     border-right: 2px solid gray;
 }
+
+@media (max-width: 768px){
+    .container{
+        grid-template-columns: 1fr;
+    }
+    .container-grid{
+        grid-template-columns: 1fr;
+    }
+    .container-filter{
+        display: flex;
+        flex-direction: row;
+        gap:10px;
+    }
+
+}
