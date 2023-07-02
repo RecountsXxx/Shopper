@@ -11,23 +11,21 @@ import Skincare from "./Categories/Skincare";
 import Laptops from "./Categories/Laptops";
 
 function App() {
-  return (
-      <div className="bg-light">
-          <Header></Header>
-          <div className="sidebar">
-              <Routes>
-                  <Route>
-                      <Route path="smartphones" element={<Smartphones></Smartphones>}></Route>
-                      <Route path="skincare" element={<Skincare></Skincare>}></Route>
-                      <Route path="laptops" element={<Laptops></Laptops>}></Route>
-                      <Route path="furniture" element={<Furniture></Furniture>}></Route>
-                  </Route>
-              </Routes>
-          </div>
-          <Footer></Footer>
-      </div>
 
-  );
+    return (
+        <div className="bg-light">
+            <Header/>
+            <div className="sidebar">
+                <Routes>
+                    <Route path="smartphones" element={<Smartphones />} />
+                    <Route path="skincare" element={<Skincare />} />
+                    <Route path="laptops" element={<Laptops />} />
+                    <Route path="furniture" element={<Furniture />} />
+                </Routes>
+            </div>
+            <Footer />
+        </div>
+    );
 }
 
 export default App;
