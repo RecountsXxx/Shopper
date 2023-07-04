@@ -21,14 +21,13 @@ export default function Header() {
                     .then((response) => response.json())
                     .then((smartphones) => {
                         setSearchResults(smartphones.products);
-                        console.log(results);
                     })
                     .catch((error) => {
                         console.log(error);
                     });
             }
             else if(searchText.length == 0) {
-                handleSearch("nixera");
+                handleSearch("404 Not Found");
             }
         }
 
@@ -40,11 +39,6 @@ export default function Header() {
             event.preventDefault();
             handleSearch(searchText);
         };
-
-        const handleBasketButtonClick = () => {
-            alert('nice');
-        };
-        console.log(results.length);
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light d-flex flex-column">
             <div className="container-fluid">
@@ -60,22 +54,21 @@ export default function Header() {
                             <img src={search} alt="Search" />
                         </button>
                     </form>
-
-                    <button onClick={handleBasketButtonClick} className="backet-btn" id="backet-btn">
-                        <label>Backet</label>
-                        <img src={backet} alt="Basket" />
-                    </button>
                 </div>
             </div>
             {results.length > 0 && (
                 <div className="search-results" ref={search_cont} >
                     <ul>
                         {results.map((result,index) => (
-                            <li>
-                                <div className="bg-primary w-100 h-100">
-                                    <div key={result.id}>
-                                        <h3>{result.title}</h3>
-                                        <p>{result.description}</p>
+                            <li className="list-unstyled mt-3 border-black border-3 border rounded">
+                                <div className="ms-3 w-75 h-100">
+                                    <div key={result.id} className="justify-content-center d-flex flex-column">
+                                        <div>
+                                            <h4>{result.title}</h4>
+                                            <h4>Category: {result.category}</h4>
+                                        </div>
+                                        <h6>Description: {result.description}</h6>
+                                        <h3 className="text-success">Price: {result.price}</h3>
                                     </div>
                                 </div>
                             </li>
@@ -95,15 +88,6 @@ export default function Header() {
                 </button>
                 <button className="categories-link">
                     <Link className="link-color" to='/laptops'>Laptops</Link>
-                </button>
-                <button className="categories-link">
-                    <Link className="link-color" to='/Smartphones'>Smarthones</Link>
-                </button>
-                <button className="categories-link">
-                    <Link className="link-color" to='/Smartphones'>Smarthones</Link>
-                </button>
-                <button className="categories-link">
-                    <Link className="link-color" to='/Smartphones'>Smarthones</Link>
                 </button>
             </div>
         </nav>
